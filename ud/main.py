@@ -19,10 +19,22 @@ import webapp2
 form="""
 <form method="post">
     What is your birthday?
-    <input type="Text" name="Month">
-    <input type="Text" name="Date">
-    <input type="Text" name="Year">
+    <br>
+    <label>
+	Month
+	<input type="Text" name="Month">
+    </label>
+
+    <label>
+	Day
+	<input type="Text" name="Date">
+    </label>
     
+    <label>
+	Year
+	<input type="Text" name="Year">
+    </label>
+    <br>
     <br>
     <input type="submit">
 </form>
@@ -30,8 +42,27 @@ form="""
 
 class MainHandler(webapp2.RequestHandler):
     def get(self):
-       #self.response.headers['Content-Type'] = 'text/plain'
         self.response.out.write(form)
+
+    def post(self):
+	self.response.out.write("That's a totally valid request")
+	month = self.request.get("Month")
+	    if month == "january":
+                self.response.out.write(month)
+	    elif
+	        self.response.out.write(NO!)
 
 app = webapp2.WSGIApplication([('/', MainHandler),],
                               debug=True)
+
+def valid_day(day):
+    if day and day.isdigit():
+	day_int = int(day)
+	if day_int > 0 and day_int <32:
+	    return day_int
+
+def valid_year(year):
+    if year and year.isdigit():
+	year_int = int(year)
+	if year_int <2020 and year_int >1900:
+	    return year_int

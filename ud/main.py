@@ -45,12 +45,13 @@ class MainHandler(webapp2.RequestHandler):
         self.response.out.write(form)
 
     def post(self):
-	self.response.out.write("That's a totally valid request")
-	month = self.request.get("Month")
-	    if month == "january":
-                self.response.out.write(month)
-	    elif
-	        self.response.out.write(NO!)
+	user_day = valid_day(self.request.get("Date"))
+	user_year = valid_year(self.request.get("Year"))
+
+	if not (user_day and user_year):
+	    self.response.out(form)
+	else:
+	    self.response.out.write("Thanks! Good to go!")
 
 app = webapp2.WSGIApplication([('/', MainHandler),],
                               debug=True)

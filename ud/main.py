@@ -20,20 +20,11 @@ form="""
 <form method="post">
     What is your birthday?
     <br>
-    <label>
-	Month
-	<input type="Text" name="Month">
-    </label>
-
-    <label>
-	Day
-	<input type="Text" name="Date">
-    </label>
-    
-    <label>
-	Year
-	<input type="Text" name="Year">
-    </label>
+    <label> Month <input type="Text" name="month" value="%(month)s"></label>
+    <label> Day	<input type="Text" name="day" value="%(day)s"></label>
+    <label> Year <input type="Text" name="year" value="%(year)s"></label>
+    <br>
+    <div style="color: red">%(error)s</div>
     <br>
     <br>
     <input type="submit">
@@ -41,19 +32,34 @@ form="""
 """
 
 class MainHandler(webapp2.RequestHandler):
+    def write_form(self, error="", month="", day="", year=""):
+	self.response.out.write(form % {"error": error,
+					"month": month,
+					"day": day,
+					"year": year})
+
     def get(self):
-        self.response.out.write(form)
+        self.write_form()
 
     def post(self):
-	user_day = valid_day(self.request.get("Date"))
-	user_year = valid_year(self.request.get("Year"))
+	user_month = self.request.get('month')
+	user_day = self.request.get('day')
+	user_year = self.request.get('year')
 
-	if not (user_day and user_year):
-	    self.response.out(form)
+	day = valid_day(user_day)
+	year = valid_year(user_year)
+
+	if not (day and year):
+	    self.write_form("That doesn't look valid to me, friend.", user_month, user_day, user_year)
 	else:
-	    self.response.out.write("Thanks! Good to go!")
+	    self.redirect("/thanks")
 
-app = webapp2.WSGIApplication([('/', MainHandler),],
+class ThanksHandler(webapp2.RequestHandler):
+   def get(self):
+	self.response.out.write("Thanks! Good to go!")
+
+app = webapp2.WSGIApplication([('/', MainHandler),
+			       ('/thanks', ThanksHandler)],
                               debug=True)
 
 def valid_day(day):

@@ -33,10 +33,3 @@ class MainHandler(webapp2.RequestHandler):
 
 app = webapp2.WSGIApplication([('/', MainHandler)],
                               debug=True)
-
-
-def rot_13(self):
-    for (i, o) in ((a,n),(b,o),(c,p),(d,q),(e,r),(f,s),(g,t),(h,u),(i,v),(j,w),(k,x),(l,y),(m,z),(n,a),(o,b)
-
-abcdefghijklm
-nopqrstuvwxyz

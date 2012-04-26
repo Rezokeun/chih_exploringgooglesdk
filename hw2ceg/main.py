@@ -15,28 +15,36 @@
 # limitations under the License.
 #
 import webapp2
+import string
 
 form="""
 <form method="post">
-    <label>Input the ROT13 text here <br><input type="text" name="text"></label>
+    <label>Input the ROT13 text here: <br><input type="text" name="text" value="%(text)s"></label>
     <br><br>
     <input type="submit">
 </form>
 """
 
 class MainHandler(webapp2.RequestHandler):
+    def write_form(self,text=""):
+	self.response.out.write(form % {"text":text})   
+
     def get(self):
-        self.response.out.write(form)
+        self.write_form()
 
     def post(self):
+	form_input = self.request.get('text')
+	rot_output = rot_13(form_input)
+	self.write_form()
 	
+	
+def rot_13(self):
+    rot13_trans = string.maketrans("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ",
+   	   		           "nopqrstuvwxyzabcdefghijklmNOPQRSTUVWXYZABCDEFGHIJKLM")
+    return self.translate(rot13_trans)
 
 app = webapp2.WSGIApplication([('/', MainHandler)],
                               debug=True)
 
 
-def rot_13(self):
-    for (i, o) in ((a,n),(b,o),(c,p),(d,q),(e,r),(f,s),(g,t),(h,u),(i,v),(j,w),(k,x),(l,y),(m,z),(n,a),(o,b)
 
-abcdefghijklm
-nopqrstuvwxyz

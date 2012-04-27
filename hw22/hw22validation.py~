@@ -1,0 +1,7 @@
+#!/usr/bin/env python
+
+def validate_username(self):
+    if user_n:
+	find_str = ' '
+	if user_n.find(find_str) != -1:
+	    return user_n
